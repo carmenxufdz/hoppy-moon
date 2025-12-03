@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://dy3miusrpujco"]
+
+[ext_resource type="Script" uid="uid://du7trj2c0lgds" path="res://scripts/game.gd" id="1_lnu2h"]
+[ext_resource type="Texture2D" uid="uid://bpblufne2ep0b" path="res://assets/wallpaper.png" id="1_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://cnfbxwlt4ihx3" path="res://scenes/star.tscn" id="2_iywne"]
+[ext_resource type="PackedScene" uid="uid://ru7n7jf8q3tu" path="res://scenes/bunny.tscn" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://dxbs6hhvyj0j4" path="res://scenes/ground.tscn" id="5_iywne"]
+
+[node name="game" type="Node2D"]
+script = ExtResource("1_lnu2h")
+star_scene = ExtResource("2_iywne")
+
+[node name="Background" type="Parallax2D" parent="."]
+texture_repeat = 2
+repeat_size = Vector2(3600, 0)
+
+[node name="Wallpaper" type="Sprite2D" parent="Background"]
+position = Vector2(1800, 640)
+texture = ExtResource("1_yqjtg")
+
+[node name="Bunny" parent="." instance=ExtResource("2_yqjtg")]
+z_index = 10
+position = Vector2(200, 640)
+
+[node name="Floor" type="Parallax2D" parent="."]
+z_index = 1
+texture_repeat = 2
+repeat_size = Vector2(720, 0)
+
+[node name="Ground" parent="Floor" instance=ExtResource("5_iywne")]
+position = Vector2(360, 1192)
+
+[node name="StarTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="timeout" from="StarTimer" to="." method="_on_star_timer_timeout"]
