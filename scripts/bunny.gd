@@ -30,7 +30,8 @@ func _physics_process(delta: float) -> void:
 		set_rotation(deg_to_rad(velocity.y*0.05))
 	elif falling:
 		set_rotation(PI/2)
-	
+	elif not falling:
+		velocity.y = 0
 	move_and_collide(velocity * delta)
 
 

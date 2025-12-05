@@ -1,4 +1,4 @@
-extends Node2D
+extends Node
 
 @export var star_scene : PackedScene
 
@@ -28,6 +28,7 @@ func new_game():
 	game_over = false
 	score = 0
 	scroll = 0
+	$ScoreLabel.text = str(score)
 	$Background.autoscroll = Vector2(0,0)
 	$Floor.autoscroll = Vector2(0,0)
 	$Bunny.reset()
@@ -42,6 +43,7 @@ func _input(event) -> void:
 				else:
 					if $Bunny.jumping:
 						$Bunny.hop()
+						check_top()
 
 func start_game():
 	game_running = true
@@ -52,9 +54,9 @@ func start_game():
 	$Floor.autoscroll = Vector2(-200,0)
 	
 func _process(delta: float) -> void:
-	#move stars
-	for star in stars:
-		star.position.x -= SCROLL_SPEED
+	if game_running:
+		for star in stars:
+			star.position.x -= SCROLL_SPEED
 		
 		
 func _on_star_timer_timeout() -> void:
@@ -65,10 +67,35 @@ func generate_stars():
 	star.position.x = screen_size.x + STAR_DELAY
 	star.position.y = (screen_size.y - ground_height) / 2 + randi_range(-STAR_RANGE, STAR_RANGE)
 	star.hit.connect(bunny_hit)
+	star.scored.connect(scored)
 	
 	add_child(star)
 	stars.append(star)
 
+func check_top():
+	print($Bunny.position.y)
+	if $Bunny.position.y < 0:
+		$Bunny.falling = true
+		stop_game()
+
+
+func stop_game():
+	$StarTimer.stop()
+	$Bunny.jumping = false
+	game_running = false
+	game_over = true
+	$Background.autoscroll = Vector2(0,0)
+	$Floor.autoscroll = Vector2(0,0)
+
+
+func _on_ground_hit() -> void:
+	$Bunny.falling = false
+	stop_game()
 
 func bunny_hit():
-	pass
+	stop_game()
+	$Bunny.falling = true
+
+func scored():
+	score += 1
+	$ScoreLabel.text = str(score)
