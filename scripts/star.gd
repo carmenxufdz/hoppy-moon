@@ -4,7 +4,6 @@ signal hit
 signal scored
 
 func _on_body_entered(body) -> void:
-	SoundPlayer.play_sound(SoundPlayer.LOOSE)
 	hit.emit()
 
 

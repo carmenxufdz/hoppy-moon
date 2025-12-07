@@ -9,7 +9,7 @@ size = Vector2(120, 616)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j6vao"]
 size = Vector2(50, 250)
 
-[node name="Star" type="Area2D"]
+[node name="Star" type="Area2D" groups=["stars"]]
 script = ExtResource("1_j6vao")
 
 [node name="Star_low" type="Sprite2D" parent="."]

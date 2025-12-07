@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dy3miusrpujco"]
+[gd_scene load_steps=9 format=3 uid="uid://dy3miusrpujco"]
 
 [ext_resource type="Script" uid="uid://du7trj2c0lgds" path="res://scripts/game.gd" id="1_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://bpblufne2ep0b" path="res://assets/game/wallpaper.png" id="1_yqjtg"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ru7n7jf8q3tu" path="res://scenes/bunny.tscn" id="2_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://dxbs6hhvyj0j4" path="res://scenes/ground.tscn" id="5_iywne"]
 [ext_resource type="FontFile" uid="uid://7ajrmkrgf7xm" path="res://fonts/flappy-bird-font.otf" id="6_p57ef"]
+[ext_resource type="PackedScene" uid="uid://yinwl2xnsyaj" path="res://scenes/game_over.tscn" id="7_u5sy4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u5sy4"]
 font = ExtResource("6_p57ef")
@@ -53,5 +54,9 @@ grow_horizontal = 2
 text = "0"
 label_settings = SubResource("LabelSettings_u5sy4")
 
+[node name="GameOver" parent="." instance=ExtResource("7_u5sy4")]
+visible = false
+
 [connection signal="hit" from="Floor/Ground" to="." method="_on_ground_hit"]
 [connection signal="timeout" from="StarTimer" to="." method="_on_star_timer_timeout"]
+[connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]

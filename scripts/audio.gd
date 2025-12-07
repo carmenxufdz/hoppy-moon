@@ -2,6 +2,7 @@ extends Node
 
 const LOOSE = preload("res://sounds/loose.wav")
 const JUMP = preload("res://sounds/hop.wav")
+const POINT = preload("res://sounds/point.wav")
 
 @onready var audioPlayer := $AudioPlayers
 

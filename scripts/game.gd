@@ -28,10 +28,14 @@ func new_game():
 	game_over = false
 	score = 0
 	scroll = 0
+	stars.clear()
+	get_tree().call_group("stars", "queue_free")
+	$GameOver.hide()
 	$ScoreLabel.text = str(score)
 	$Background.autoscroll = Vector2(0,0)
 	$Floor.autoscroll = Vector2(0,0)
 	$Bunny.reset()
+	generate_stars()
 	
 
 func _input(event) -> void:
@@ -86,10 +90,12 @@ func stop_game():
 	game_over = true
 	$Background.autoscroll = Vector2(0,0)
 	$Floor.autoscroll = Vector2(0,0)
+	$GameOver.show()
 
 
 func _on_ground_hit() -> void:
 	$Bunny.falling = false
+	SoundPlayer.play_sound(SoundPlayer.LOOSE)
 	stop_game()
 
 func bunny_hit():
@@ -99,3 +105,8 @@ func bunny_hit():
 func scored():
 	score += 1
 	$ScoreLabel.text = str(score)
+	SoundPlayer.play_sound(SoundPlayer.POINT)
+
+
+func _on_game_over_restart() -> void:
+	new_game()
