@@ -32,4 +32,4 @@ Click the image below to play Hoppy Moon on Itch.io:
 
 [![Play Pink Pong](https://github.com/carmenxufdz/hoppy-moon/blob/main/assets/game/cover.png)](https://alissea.itch.io/hoppy-moon)
 
-### Have fun playing Pink Pong!🩷
+### Have fun playing Hoppy Moon!🐇
