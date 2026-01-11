@@ -2,7 +2,7 @@ extends Node
 
 @export var star_scene : PackedScene
 
-const SCROLL_SPEED : int = 1
+const SCROLL_SPEED := 200
 const STAR_DELAY : int = 50
 const STAR_RANGE : int = 200
 
@@ -15,14 +15,18 @@ var ground_height : int
 var screen_size : Vector2i
 var stars : Array
 
-var base_height := 720  # la altura original de tu juego (cámbiala si es otra)ç
+var base_height := 720  # la altura original del juego
+var base_width := 1280  # el ancho original del juego
 var scale_y
-
+var scale_x 
+var delay_scaled
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	screen_size = get_viewport().get_visible_rect().size
 	scale_y = screen_size.y / base_height
+	scale_x = screen_size.x / base_width
+	delay_scaled = STAR_DELAY * scale_x
 	ground_height = $Floor/Ground.get_node("Floor").texture.get_height()
 	new_game()
 
@@ -64,7 +68,7 @@ func start_game():
 func _process(delta: float) -> void:
 	if game_running:
 		for star in stars:
-			star.position.x -= SCROLL_SPEED
+			star.position.x -= SCROLL_SPEED * delta
 		
 		
 func _on_star_timer_timeout() -> void:
@@ -72,7 +76,7 @@ func _on_star_timer_timeout() -> void:
 
 func generate_stars():
 	var star = star_scene.instantiate()
-	star.position.x = screen_size.x + STAR_DELAY
+	star.position.x = screen_size.x + delay_scaled
 	
 	var mid_y = (screen_size.y - ground_height) / 2
 	var range_scaled = STAR_RANGE * scale_y
